@@ -1,0 +1,550 @@
+/* ═══════════════════════════════════════
+   Results Page — SafeDose
+   Android-first · 48dp touch targets
+   ═══════════════════════════════════════ */
+
+.resultsContainer {
+  padding: var(--sp-8) 0 var(--sp-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: var(--sp-2) 0;
+  font-family: var(--font-sans);
+  min-height: 48px; /* Android touch target */
+  transition: color var(--ease-fast);
+  align-self: flex-start;
+}
+
+.backBtn:hover {
+  color: var(--text-primary);
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-1);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+}
+
+/* ── Audio Controls ── */
+.audioControls {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.langSelect {
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  cursor: pointer;
+  outline: none;
+  font-family: var(--font-sans);
+  min-height: 48px;
+  font-weight: 500;
+  transition: border-color var(--ease-fast);
+}
+
+.langSelect:focus {
+  border-color: var(--border-focus);
+}
+
+.audioBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--ease-fast);
+  font-family: var(--font-sans);
+  white-space: nowrap;
+  min-height: 48px;
+}
+
+.audioBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Score Section ── */
+.scoreSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+}
+
+@media (min-width: 768px) {
+  .scoreSection {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+.scoreCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--sp-8) var(--sp-6);
+  gap: var(--sp-6);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.scoreLabel {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scoreValue {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.scoreMax {
+  font-size: var(--text-xl);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.gradeScale {
+  display: flex;
+  gap: var(--sp-1);
+  background: var(--bg-inset);
+  padding: var(--sp-1);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--sp-2);
+}
+
+.grade {
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-muted);
+  border-radius: var(--radius-xs);
+}
+
+.gradeActive {
+  color: #FFFFFF;
+}
+
+.gradeDesc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--sp-6);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--sp-6);
+}
+
+.infoItem {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+
+.infoIcon {
+  color: var(--color-brand-primary);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.infoLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.infoValue {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+}
+
+/* ── Verdict Banner ── */
+.verdictBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding: var(--sp-6);
+  border-radius: var(--radius-md);
+}
+
+.verdictTitle {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--sp-1);
+  color: inherit;
+  letter-spacing: -0.01em;
+}
+
+.reportBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  background: var(--bg-surface);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  min-height: 48px;
+  transition: opacity var(--ease-fast), background var(--ease-fast);
+}
+
+.reportBtn:hover {
+  opacity: 0.9;
+  background: var(--bg-inset);
+}
+
+/* ── Drug Info Card ── */
+.drugInfoCard {
+  padding: var(--sp-6);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.drugInfoHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.drugInfoHeader h3 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.drugInfoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+}
+
+@media (min-width: 640px) {
+  .drugInfoGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.drugInfoSectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.drugInfoText {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-2);
+  line-height: 1.5;
+}
+
+.drugInfoStrong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sideEffectList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.sideEffectTag {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 4px 10px;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-full);
+}
+
+/* ── Security Layers ── */
+.sectionTitle {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--sp-3);
+  margin: var(--sp-4) 0 var(--sp-4);
+  color: var(--text-primary);
+}
+
+.layerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--sp-4);
+}
+
+.layerCard {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-5);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.layerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--sp-3);
+}
+
+.layerName {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.layerDesc {
+  font-size: var(--text-sm);
+  flex: 1;
+  margin-bottom: var(--sp-4);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.scanCount {
+  display: block;
+  margin-top: var(--sp-1);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.layerScore {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  background: var(--bg-inset);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  align-self: flex-start;
+}
+
+/* ── Timeline ── */
+.timelineCard {
+  overflow-x: auto;
+  padding: var(--sp-6) var(--sp-8);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  min-width: 500px;
+}
+
+.timelineNode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  text-align: center;
+}
+
+.timelineIcon {
+  width: 36px;
+  height: 36px;
+  background: var(--color-verified);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  margin-bottom: var(--sp-2);
+}
+
+.timelineNode:last-child .timelineIcon {
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  border: 1px dashed var(--border-default);
+}
+
+.connector {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  right: -50%;
+  height: 2px;
+  background: var(--color-verified);
+  z-index: 1;
+}
+
+.nodeName {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.nodeDate {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ── Geo Location Map ── */
+.geoCard {
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.geoHeader {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--bg-inset);
+}
+
+.geoTitle {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .resultsContainer {
+    padding: var(--sp-4) 0 var(--sp-12);
+  }
+  .title {
+    font-size: var(--text-2xl);
+  }
+  .headerRow {
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  .audioControls {
+    width: 100%;
+  }
+  .langSelect {
+    flex: 1;
+  }
+  .audioBtn {
+    flex: 1;
+    justify-content: center;
+  }
+  .layerGrid {
+    grid-template-columns: 1fr;
+  }
+  .verdictBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-4);
+  }
+  .reportBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .scoreValue {
+    font-size: var(--text-4xl);
+  }
+  .infoGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-4);
+  }
+  .timeline {
+    min-width: 380px;
+  }
+  .verdictTitle {
+    font-size: var(--text-xl);
+  }
+}

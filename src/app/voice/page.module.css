@@ -1,0 +1,297 @@
+/* ═══════════════════════════════════════
+   Voice Page — SafeDose
+   ═══════════════════════════════════════ */
+
+.page {
+  max-width: 720px;
+  margin: var(--sp-12) auto var(--sp-16);
+  padding: 0 var(--sp-6);
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: var(--sp-8);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-2);
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  margin: 0 auto;
+}
+
+/* ── Education Mode Toggle ── */
+.eduToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+}
+
+.eduLabel {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background: var(--border-strong);
+  transition: background var(--ease-fast);
+  padding: 0;
+}
+
+.switchActive {
+  background: var(--color-brand-primary);
+}
+
+.switchKnob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  transition: left var(--ease-fast);
+  box-shadow: var(--shadow-xs);
+}
+
+.switchActive .switchKnob {
+  left: 22px;
+}
+
+.eduHint {
+  font-size: var(--text-xs);
+  color: var(--color-brand-primary);
+  margin-top: var(--sp-3);
+  font-weight: 600;
+}
+
+/* ── Settings Bar ── */
+.settingsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4) var(--sp-5);
+  margin-bottom: var(--sp-6);
+  box-shadow: var(--shadow-xs);
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.locIcon {
+  color: var(--color-brand-primary);
+}
+
+.langControl {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.langLabel {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.langSelect {
+  padding: 0 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  outline: none;
+  cursor: pointer;
+  min-height: 40px;
+  font-family: inherit;
+  transition: border-color var(--ease-fast);
+}
+
+.langSelect:focus {
+  border-color: var(--border-focus);
+}
+
+/* ── Voice Main Card ── */
+.voiceCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--sp-12) var(--sp-6);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.recordBtn {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--sp-6);
+  cursor: pointer;
+  background: var(--color-brand-primary);
+  color: #FFFFFF;
+  transition: all var(--ease-fast);
+}
+
+.recordBtn:disabled {
+  cursor: not-allowed;
+}
+
+.recordBtnActive {
+  background: var(--color-danger);
+  box-shadow: 0 0 0 8px var(--color-danger-bg);
+}
+
+.recordBtnProcessing {
+  background: var(--bg-inset);
+  color: var(--color-brand-primary);
+  border: 1px solid var(--border-default);
+}
+
+.statusText {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-2);
+}
+
+/* ── Transcript Area ── */
+.transcriptArea {
+  margin-top: var(--sp-8);
+  background: var(--bg-canvas);
+  border-radius: var(--radius-md);
+  padding: var(--sp-5);
+  border: 1px solid var(--border-subtle);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.transcriptLabel {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: var(--sp-1);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.transcriptText {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  font-family: monospace;
+  font-weight: 600;
+  margin-bottom: var(--sp-4);
+  line-height: 1.5;
+}
+
+/* ── Education Text ── */
+.eduContent {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+
+.eduTitle {
+  font-size: var(--text-xs);
+  color: var(--color-brand-primary);
+  font-weight: 700;
+  margin-bottom: var(--sp-2);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.eduDesc {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ── Verification Result ── */
+.resultArea {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--sp-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resultVerified {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--color-verified);
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.playBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-brand-primary);
+  transition: all var(--ease-fast);
+}
+
+.playBtn:hover {
+  background: var(--color-brand-primary-tint);
+  border-color: var(--border-focus);
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 0 var(--sp-4);
+  }
+  .settingsBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .langControl {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

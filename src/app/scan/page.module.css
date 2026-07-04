@@ -1,0 +1,499 @@
+/* ═══════════════════════════════════════
+   Scan Page — SafeDose
+   Android-first · 48dp touch targets
+   ═══════════════════════════════════════ */
+
+.scanContainer {
+  padding: var(--sp-8) 0 var(--sp-16);
+}
+
+/* ── Page Header ── */
+.header {
+  margin-bottom: var(--sp-8);
+  max-width: 560px;
+}
+
+.title {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--sp-2);
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Two-Column Layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--sp-8);
+  }
+}
+
+/* ── Input Card ── */
+.inputCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--sp-5);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-inset);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 14px var(--sp-4);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast);
+  min-height: 48px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+}
+
+.activeTab {
+  color: var(--color-brand-primary);
+  border-bottom-color: var(--color-brand-primary);
+  background: var(--bg-surface);
+}
+
+/* ── Tab Content ── */
+.inputContent {
+  padding: var(--sp-6);
+}
+
+/* ── Scanner Frame ── */
+.scannerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.scannerFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 400px;
+  margin: 0 auto;
+  background: #0F1923;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scannerLine {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-brand-secondary);
+  box-shadow: 0 0 10px var(--color-brand-secondary);
+  animation: scanPulse 2s ease-in-out infinite;
+  z-index: 3;
+}
+
+.scannerCorner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-color: var(--color-brand-secondary);
+  border-style: solid;
+  border-width: 0;
+  z-index: 2;
+}
+
+.tl { top: 14px; left: 14px; border-top-width: 2px; border-left-width: 2px; border-radius: 2px; }
+.tr { top: 14px; right: 14px; border-top-width: 2px; border-right-width: 2px; border-radius: 2px; }
+.bl { bottom: 14px; left: 14px; border-bottom-width: 2px; border-left-width: 2px; border-radius: 2px; }
+.br { bottom: 14px; right: 14px; border-bottom-width: 2px; border-right-width: 2px; border-radius: 2px; }
+
+.scannerText {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-align: center;
+  padding: var(--sp-6);
+  max-width: 80%;
+  z-index: 2;
+  line-height: 1.5;
+}
+
+.videoFeed {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Scanner Actions ── */
+.scannerActions {
+  display: flex;
+  gap: var(--sp-3);
+}
+
+@media (max-width: 480px) {
+  .scannerActions {
+    flex-direction: column;
+  }
+}
+
+.fullWidthBtn {
+  flex: 1;
+  padding: 13px var(--sp-4);
+  font-size: var(--text-base);
+  font-weight: 600;
+  font-family: var(--font-sans);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 48px;
+  transition: background var(--ease-fast), border-color var(--ease-fast);
+}
+
+.fullWidthBtn:hover:not(:disabled) {
+  background: var(--bg-inset);
+  border-color: var(--border-strong);
+}
+
+.fullWidthBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fullWidthBtnPrimary {
+  background: var(--color-brand-primary);
+  color: #FFFFFF;
+  border-color: var(--color-brand-primary);
+}
+
+.fullWidthBtnPrimary:hover:not(:disabled) {
+  background: #142F4A;
+  border-color: #142F4A;
+}
+
+/* ── Error ── */
+.errorText {
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin: 0;
+  background: var(--color-danger-bg);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-danger-border);
+}
+
+/* ── Manual Entry ── */
+.manualEntry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.formGroup label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.input {
+  padding: 12px var(--sp-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  outline: none;
+  min-height: 48px;
+  transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(24, 61, 97, 0.1);
+  background: var(--bg-surface);
+}
+
+/* ── Recent Scans ── */
+.recentScans {
+  margin-top: var(--sp-5);
+}
+
+.sectionTitle {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.recentList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.emptyState {
+  padding: var(--sp-6);
+  text-align: center;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.recentItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  min-height: 48px;
+  transition: border-color var(--ease-fast);
+}
+
+.recentItem:hover {
+  border-color: var(--border-default);
+}
+
+.recentName {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.recentTime {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin: 2px 0 0;
+}
+
+.recentScore {
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+/* ── Geo Card ── */
+.geoCard {
+  margin-top: var(--sp-5);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.geoCardHeader {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--bg-inset);
+}
+
+.geoLabel {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.geoDisabledCard {
+  margin-top: var(--sp-5);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.geoDisabledText {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Right: Progress Panel ── */
+.progressCard {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--sp-6));
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.panelHeader {
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-inset);
+}
+
+.panelTitle {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.stepsList {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-4) var(--sp-5);
+  gap: var(--sp-1);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-3);
+  border-radius: var(--radius-sm);
+  min-height: 48px;
+  transition: background var(--ease-fast);
+}
+
+.step:hover {
+  background: var(--bg-inset);
+}
+
+.stepIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.iconPending { color: var(--text-disabled); }
+.iconSuccess { color: var(--color-verified); }
+.iconWarning { color: var(--color-suspicious); }
+.iconError   { color: var(--color-danger); }
+
+.stepLabel {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  flex: 1;
+}
+
+.stepDesc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.text-pending { color: var(--text-muted); }
+.text-success { color: var(--text-primary); font-weight: 600; }
+.text-warning { color: var(--color-suspicious); font-weight: 600; }
+.text-error   { color: var(--color-danger); font-weight: 600; }
+
+/* ── Progress Footer ── */
+.progressFooter {
+  padding: var(--sp-4) var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-inset);
+}
+
+.waitingText {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .progressCard {
+    position: static;
+  }
+  .title {
+    font-size: var(--text-3xl);
+  }
+  .inputContent {
+    padding: var(--sp-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: var(--text-2xl);
+  }
+  .tab {
+    font-size: var(--text-xs);
+    padding: 12px var(--sp-2);
+  }
+  .inputContent {
+    padding: var(--sp-4);
+  }
+  .scannerFrame {
+    max-width: 300px;
+  }
+  .scanContainer {
+    padding: var(--sp-6) 0 var(--sp-12);
+  }
+}

@@ -1,0 +1,142 @@
+/* ═══════════════════════════════════════
+   Pharmacies Page — SafeDose
+   ═══════════════════════════════════════ */
+
+.page {
+  max-width: 800px;
+  margin: var(--sp-8) auto var(--sp-16);
+  padding: 0 var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+/* ── Header ── */
+.header {
+  margin-bottom: var(--sp-4);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-size: var(--text-sm);
+}
+
+/* ── List ── */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ── Empty & Loading States ── */
+.message {
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--sp-8);
+  font-size: var(--text-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+}
+
+/* ── Pharmacy Card ── */
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--sp-5);
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow var(--ease-fast);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.cardFlagged {
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-bg);
+}
+
+.rank {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-muted);
+  min-width: 32px;
+}
+
+.info {
+  flex: 1;
+}
+
+.name {
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  font-size: var(--text-base);
+}
+
+.meta {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+.scoreContainer {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.score {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+}
+
+.badge {
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon {
+  margin-left: var(--sp-2);
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 0 var(--sp-4);
+  }
+  .card {
+    padding: var(--sp-4);
+    gap: var(--sp-3);
+  }
+  .score {
+    font-size: var(--text-lg);
+  }
+  .icon {
+    display: none;
+  }
+}
