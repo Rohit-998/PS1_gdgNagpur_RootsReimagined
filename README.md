@@ -1,191 +1,102 @@
-<div align="center">
-
 # SafeDose
 
-### Stop Fake Medicine. Save Real Lives.
+SafeDose is a pharmaceutical verification platform designed to detect counterfeit medicines. It utilizes a 6-layer security engine, cryptographic hashing, and multilingual voice synthesis to authenticate medications via QR code scanning.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-safedose--rootsreimagined.vercel.app-5B46FF?style=for-the-badge)](https://safedose-rootsreimagined.vercel.app/)
-[![Built With](https://img.shields.io/badge/Built_With-Next.js_16-000000?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![AI Powered](https://img.shields.io/badge/AI-Google_Gemini-4285F4?style=for-the-badge&logo=google)](https://ai.google.dev/)
-[![Database](https://img.shields.io/badge/Database-MongoDB-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
+## Architecture & Verification Engine
 
----
+The core verification mechanism processes each scan through six independent layers:
 
-**SafeDose** is an AI-powered pharmaceutical verification platform that detects counterfeit medicines using a **6-layer security engine**, **cryptographic hashing**, and **multilingual voice AI** — all from a single QR code scan.
+1. Batch Validation: Verifies the existence of the batch ID within the manufacturer database.
+2. Cryptographic Hash: Validates the medicine's unique SHA-256 hash signature.
+3. Clone Detection: Identifies medicines scanned an anomalous number of times.
+4. Geographic Validation: Correlates the scan location with the authorized supply chain trajectory.
+5. Temporal Validation: Detects scans occurring outside expected expiration or distribution time windows.
+6. Supply Chain Integrity: Traces the chain of custody from the manufacturer to the retail pharmacy.
 
-</div>
+Based on these parameters, a final confidence score is generated, classifying the scan as Verified, Suspicious, or Counterfeit.
 
----
+## Features
 
-## The Problem
+- Technical Chat Assistant: Provides structured information regarding medication dosage, side effects, and drug interactions.
+- Multilingual Voice Synthesis: Delivers verification results via text-to-speech across multiple regional languages.
+- Role-Based Access Control: Specialized dashboards and functionalities for Consumers, Pharmacies, Manufacturers, and Regulators.
+- Trust Analytics: Tracks pharmacy verification integrity and reports history.
+- Anomaly Reporting: Secure submission of counterfeit reports.
+- Supply Chain Tracking: Visual and data-driven tracing of a medicine's distribution lifecycle.
 
-> **1 in 10 medicines** in low- and middle-income countries is substandard or falsified.
-> Counterfeit drugs kill an estimated **1 million people** every year.
->
-> — *World Health Organization*
+## Technical Stack
 
-Consumers have **no easy way** to verify if the medicine they purchased is genuine. Pharmacies lack tools to track authenticity, and regulators can't act without real-time data.
+- Frontend: Next.js 16, React 19, Framer Motion, GSAP, Three.js
+- Backend: Next.js API Routes, Node.js
+- Database: MongoDB, Mongoose ODM
+- External Integrations: Google Gemini API, Sarvam AI (TTS), Web Speech API, Twilio (OTP)
+- Client-Side Processing: jsQR (browser-based QR decoding)
 
-## The Solution
-
-**SafeDose** gives every stakeholder — consumers, pharmacies, manufacturers, and regulators — a unified platform to **verify, track, and report** counterfeit medicines instantly.
-
-**Scan → Verify → Trust.**
-
----
-
-## Key Features
-
-### 6-Layer Verification Engine
-Every medicine scan passes through **six independent security layers** before a trust score is generated:
-
-| Layer | What It Checks | Max Score |
-|-------|---------------|-----------|
-| **Batch Validation** | Verifies the batch ID exists in the manufacturer database | 30 pts |
-| **Cryptographic Hash** | Validates the medicine's unique SHA-256 hash signature | 25 pts |
-| **Clone Detection** | Flags medicines scanned an abnormal number of times | 20 pts |
-| **Geographic Validation** | Checks if the scan location matches the supply chain | 10 pts |
-| **Temporal Validation** | Detects scans outside expected time windows | 10 pts |
-| **Supply Chain Integrity** | Traces the full journey from factory to pharmacy | 5 pts |
-
-> **Total: 100 points** — Graded **A+ to F** with a final verdict: Verified, Suspicious, or Counterfeit.
-
----
-
-### AI-Powered Intelligence
-- **Gemini Chatbot** — Ask questions about your medicine, dosage, side effects, and interactions in natural language.
-- **Drug Interaction Checker** — Cross-references your medicines to flag dangerous combinations.
-- **Smart Alerts** — Automated notifications when counterfeit patterns are detected in your area.
-
-### Multilingual Voice AI
-- **Voice Verdict** — Hear the verification result in your language using Sarvam AI text-to-speech.
-- **Voice Reporting** — Report counterfeit medicines using just your voice.
-- **10+ Indian Languages** — Hindi, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia, and more.
-
-### Role-Based Dashboards
-| Role | Capabilities |
-|------|-------------|
-| **Consumer** | Scan & verify medicines, check interactions, report counterfeits |
-| **Pharmacy** | Track verification history, build trust score, manage inventory |
-| **Manufacturer** | Register batches, monitor supply chain, view recall alerts |
-| **Regulator** | Access analytics, review reports, issue recalls |
-
-### Additional Features
-- **Trust Leaderboard** — Ranks pharmacies by verification integrity and report history.
-- **Anonymous Reporting** — Submit counterfeit reports securely with OTP verification via Twilio.
-- **Supply Chain Timeline** — Visual trace of a medicine's journey from factory to distributor to pharmacy.
-- **Scan History** — Complete log of all your past verifications.
-
----
-
-## Tech Stack
-
-| Category | Technologies |
-|----------|-------------|
-| **Frontend** | Next.js 16, React 19, Framer Motion, GSAP, Three.js |
-| **Backend** | Next.js API Routes, Node.js |
-| **Database** | MongoDB with Mongoose ODM |
-| **AI / Voice** | Google Gemini API, Sarvam AI (TTS), Web Speech API |
-| **Auth** | Custom role-based authentication with OTP (Twilio) |
-| **Scanning** | jsQR (browser-based QR decoding), qrcode (generation) |
-| **Deployment** | Vercel |
-
----
-
-## Getting Started
+## Setup and Installation
 
 ### Prerequisites
-- **Node.js** 18+ and **npm**
-- A **MongoDB** database (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
-- API keys for **Sarvam AI**, **Google Gemini**, and **Twilio** (optional, for SMS)
+- Node.js 18+ and npm
+- MongoDB database
+- API keys for Sarvam AI, Google Gemini, and Twilio (optional)
 
-### 1. Clone & Install
+### Installation
 
-```bash
-git clone https://github.com/Rohit-998/RootsReImagined_HackPrix.git
-cd RootsReImagined_HackPrix/mediguard
-npm install
-```
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone https://github.com/Rohit-998/PS1_gdgNagpur_RootsReimagined.git
+   cd PS1_gdgNagpur_RootsReimagined/mediguard
+   ```
 
-### 2. Configure Environment
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Create a `.env.local` file in the `mediguard/` directory:
+3. Configure environment variables. Create a `.env.local` file in the `mediguard/` directory:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   MEDIGUARD_SECRET_KEY=your_secret_key
+   SARVAM_API_KEY=your_sarvam_api_key
+   GEMINI_API_KEY=your_gemini_api_key
+   ```
 
-```env
-MONGODB_URI=your_mongodb_connection_string
-MEDIGUARD_SECRET_KEY=mediguard_demo_secret_2024
-SARVAM_API_KEY=your_sarvam_api_key
-GEMINI_API_KEY=your_gemini_api_key
-```
+4. Seed the database with test data:
+   ```bash
+   node seed.mjs
+   ```
 
-### 3. Seed the Database
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-Populate the database with demo medicines, pharmacies, and supply chain events:
-
-```bash
-node seed.mjs
-```
-
-### 4. Run
-
-```bash
-npm run dev
-```
-
-Open **[http://localhost:3000](http://localhost:3000)** and start scanning.
-
----
+The application will be accessible at http://localhost:3000.
 
 ## Demo Credentials
 
+The following accounts can be used to test role-specific functionalities:
+
 | Role | Email | Password |
 |------|-------|----------|
-| Consumer | `consumer@demo.com` | `demo123` |
-| Pharmacy | `pharmacy@demo.com` | `demo123` |
-| Manufacturer | `manufacturer@demo.com` | `demo123` |
-| Regulator | `regulator@demo.com` | `demo123` |
+| Consumer | consumer@demo.com | demo123 |
+| Pharmacy | pharmacy@demo.com | demo123 |
+| Manufacturer | manufacturer@demo.com | demo123 |
+| Regulator | regulator@demo.com | demo123 |
 
----
+## Directory Structure
 
-## Project Structure
-
-```
+```text
 mediguard/
 ├── src/
-│   ├── app/                  # Next.js App Router pages
-│   │   ├── api/              # 15+ REST API routes
-│   │   │   ├── verify/       # 6-layer verification engine
-│   │   │   ├── chat/         # Gemini AI chatbot
-│   │   │   ├── voice/        # Sarvam AI voice synthesis
-│   │   │   ├── interactions/ # Drug interaction checker
-│   │   │   ├── report/       # Anonymous reporting
-│   │   │   └── ...
-│   │   ├── scan/             # QR code scanner
-│   │   ├── results/          # Verification results & verdict
+│   ├── app/                  # Next.js App Router and Pages
+│   │   ├── api/              # REST API endpoints
+│   │   ├── scan/             # QR code scanning module
+│   │   ├── results/          # Verification results module
 │   │   ├── admin/            # Regulator dashboard
-│   │   ├── pharmacies/       # Trust leaderboard
-│   │   └── ...
-│   ├── components/           # Reusable UI components
+│   │   └── pharmacies/       # Trust analytics
+│   ├── components/           # Reusable React components
 │   ├── models/               # MongoDB/Mongoose schemas
-│   └── utils/                # Helpers & language configs
-├── seed.mjs                  # Database seeder
-└── package.json
+│   └── utils/                # Utility functions and configurations
+├── seed.mjs                  # Database initialization script
+└── package.json              # Project dependencies and scripts
 ```
-
----
-
-## Built for HackPrix
-
-SafeDose was built by **Team RootsReImagined** to tackle the global counterfeit medicine crisis using AI, cryptography, and accessible multilingual interfaces.
-
-> *Because everyone deserves to trust the medicine they take.*
-
----
-
-<div align="center">
-
-**Star this repo if you found it useful!**
-
-Made with care by Team RootsReImagined
-
-</div>
