@@ -1,3 +1,4 @@
+// Report Page — counterfeit reporting with manual form and voice assistant
 'use client';
 
 import { useState, useRef, useCallback, Suspense, useEffect } from 'react';

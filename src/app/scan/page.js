@@ -1,3 +1,4 @@
+// Scan Page — QR scanner with camera, image upload, and manual entry
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
@@ -248,7 +249,7 @@ export default function ScanPage() {
       setError('Please enter both Batch ID and Serial Number.');
       return;
     }
-    runVerification({ batch_id: manualBatch.trim(), serial_number: manualSerial.trim(), hash: '' });
+    runVerification({ batch_id: manualBatch.trim(), serial_number: manualSerial.trim(), hash: '', isManual: true });
   };
 
   const verdictColor = (verdict) =>

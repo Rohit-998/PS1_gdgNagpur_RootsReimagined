@@ -7,6 +7,8 @@ import VerificationWorkflow from '@/components/VerificationWorkflow';
 import VerificationIntelligence from '@/components/VerificationIntelligence';
 import styles from './page.module.css';
 
+// Feature cards for the six-layer verification system
+
 const FEATURES = [
   {
     icon: ShieldCheck,
