@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { verifyMedicine } from '@/services/verificationEngine';
 import { verifyToken } from '@/middleware/auth';
 
+
+// POST /api/verify — Core QR verification endpoint
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -36,7 +38,7 @@ export async function POST(request) {
 
     return NextResponse.json(verificationResult, { status: 200 });
   } catch (error) {
-    console.error('Error in verification API:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('[Verify API] Verification failed:', error.message);
+    return NextResponse.json({ error: 'Verification service unavailable' }, { status: 500 });
   }
 }

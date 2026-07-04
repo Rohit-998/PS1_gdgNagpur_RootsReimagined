@@ -4,6 +4,8 @@ import ScanLog from '@/models/ScanLog';
 import Report from '@/models/Report';
 import Pharmacy from '@/models/Pharmacy';
 
+
+// GET /api/stats — Homepage statistics (total scans, counterfeits, etc.)
 export async function GET() {
   try {
     await connectDB();

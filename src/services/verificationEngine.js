@@ -1,3 +1,8 @@
+/**
+ * SafeDose Verification Engine
+ * Multi-layer pharmaceutical verification: batch, crypto, clone detection,
+ * geographic, temporal, supply chain, recall check, and AI analysis.
+ */
 import Medicine from '../models/Medicine.js';
 import Manufacturer from '../models/Manufacturer.js';
 import ScanLog from '../models/ScanLog.js';

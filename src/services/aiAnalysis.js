@@ -1,5 +1,8 @@
-// AI-powered counterfeit analysis using Google Gemini API
-// Falls back to rule-based analysis if API key not available
+/**
+ * AI-powered counterfeit analysis using Google Gemini 2.0 Flash
+ * Falls back to rule-based analysis if API key not available
+ * Also provides rural medicine education via generateRuralEducationText()
+ */
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';

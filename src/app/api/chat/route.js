@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
+
+// POST /api/chat — Gemini-powered pharmaceutical chatbot
 export async function POST(request) {
   try {
     const { message, context } = await request.json();
@@ -37,7 +39,7 @@ ${context ? `\nContext about the medicine being viewed:\n${context}` : ''}`;
 
     return NextResponse.json({ reply }, { status: 200 });
   } catch (error) {
-    console.error('Chat API Error:', error);
+    console.error('[Chat API] Gemini request failed:', error.message);
     
     // Fallback logic for demo
     const isInteractionCheck = message?.toLowerCase().includes('interact') || message?.toLowerCase().includes('safe with');
