@@ -60,7 +60,7 @@ export default function Footer() {
             <Link href="/scan"        className={styles.footerLink}>Scan Medicine</Link>
             <Link href="/history"     className={styles.footerLink}>Scan History</Link>
             <Link href="/pharmacies"  className={styles.footerLink}>Pharmacies</Link>
-            <Link href="/interactions"className={styles.footerLink}>Drug Interactions</Link>
+
           </div>
 
           {/* Verification */}

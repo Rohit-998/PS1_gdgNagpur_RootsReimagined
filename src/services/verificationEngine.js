@@ -230,7 +230,7 @@ export async function verifyMedicine(qrData, userLocation, scannerCtx = {}) {
       dosage: medicine.dosage,
       instructions: medicine.instructions,
       side_effects: medicine.side_effects,
-      drug_interactions: medicine.drug_interactions,
+
       authorized_region: medicine.authorized_region,
       recalled: medicine.recalled,
     } : null,

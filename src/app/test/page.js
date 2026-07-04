@@ -359,45 +359,6 @@ function ManufacturerPanel() {
   );
 }
 
-// ─── 8. Drug Interactions ──────────────────────
-function InteractionsPanel() {
-  const [med1, setMed1] = useState('Paracetamol 500mg');
-  const [med2, setMed2] = useState('Metformin 500mg');
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const check = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/interactions/check', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ medicines: [med1, med2] }),
-      });
-      setResult(await res.json());
-    } catch (e) { setResult({ error: e.message }); }
-    setLoading(false);
-  };
-
-  const statusColor = { safe: 'text-emerald-400', caution: 'text-amber-400', dangerous: 'text-red-400' };
-
-  return (
-    <Section title="💉 8. Drug Interaction Checker (POST /api/interactions/check)" color="yellow">
-      <div className="flex gap-2 items-end mb-3">
-        <Input label="Medicine 1" value={med1} onChange={setMed1} />
-        <Input label="Medicine 2" value={med2} onChange={setMed2} />
-        <Btn onClick={check} disabled={loading} variant="warning">Check</Btn>
-      </div>
-      {result?.safety_status && (
-        <p className={`text-lg font-bold ${statusColor[result.safety_status]}`}>
-          {result.safety_status === 'safe' ? '✅ Safe' : result.safety_status === 'caution' ? '⚠️ Caution' : '🚨 Dangerous'}
-          {' — '}{result.total_interactions} interaction(s) found
-        </p>
-      )}
-      <JsonBlock data={result} />
-    </Section>
-  );
-}
 
 // ─── 9. Auth ──────────────────────
 function AuthPanel() {
@@ -525,7 +486,7 @@ export default function TestDashboard() {
         <StatsPanel />
         <AlertsPanel />
         <ManufacturerPanel />
-        <InteractionsPanel />
+
         <AuthPanel />
         <WebhookPanel />
         <RecentScansPanel />

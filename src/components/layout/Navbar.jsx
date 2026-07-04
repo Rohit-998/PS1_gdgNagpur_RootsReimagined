@@ -4,16 +4,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { QrCode, Flag, BarChart2, Activity, Info, X, Menu, LogIn, LogOut, LayoutDashboard } from 'lucide-react';
+import { QrCode, Flag, BarChart2, X, Menu, LogIn, LogOut, LayoutDashboard } from 'lucide-react';
 import { getDashboardHref } from '@/lib/authHelpers';
 import './Navbar.css';
 
 const NAV_LINKS = [
   { href: '/scan',         label: 'Scan',          icon: QrCode      },
-  { href: '/interactions', label: 'Interactions',   icon: Activity    },
   { href: '/report',       label: 'Report',         icon: Flag        },
   { href: '/pharmacies',   label: 'Pharmacies',     icon: BarChart2   },
-  { href: '/demo',         label: 'How It Works',   icon: Info        },
 ];
 
 export default function Navbar() {

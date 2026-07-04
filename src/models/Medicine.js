@@ -21,7 +21,7 @@ const medicineSchema = new mongoose.Schema({
   side_effects: [{ type: String }],
   instructions: { type: String },
   alternatives: [{ type: String }],
-  drug_interactions: [{ type: String }], // medicine names that interact
+
 }, { timestamps: true });
 
 medicineSchema.index({ batch_id: 1, serial_number: 1 }, { unique: true });

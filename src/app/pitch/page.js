@@ -123,7 +123,7 @@ const SLIDES = [
           {[
             { icon: Mic, title: 'AI Voice Assistant', desc: '10 Indian languages via Sarvam AI — speaks verification results aloud for illiterate users', color: '#7C3AED' },
             { icon: Flag, title: 'Anonymous Reporting', desc: 'Voice-guided counterfeit reporting with OTP verification in local languages', color: '#DC2626' },
-            { icon: ShieldAlert, title: 'Drug Interactions', desc: 'Cross-reference medicines to catch dangerous drug combinations', color: '#F59E0B' },
+            { icon: ShieldAlert, title: 'Supply Chain Tracking', desc: 'Real-time shipment tracking with map visualization and delay detection', color: '#F59E0B' },
             { icon: BarChart2, title: 'Trust Leaderboard', desc: 'Public pharmacy ranking based on verification integrity scores', color: '#059669' },
             { icon: Zap, title: 'Gemini AI Chatbot', desc: 'Ask questions about dosage, side effects, and alternatives', color: '#0EA5E9' },
             { icon: Building2, title: 'Admin Dashboard', desc: 'Real-time monitoring for regulators and manufacturers', color: '#EC4899' },

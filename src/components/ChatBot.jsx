@@ -9,7 +9,7 @@ function ChatBotContent() {
 
   const [open,     setOpen]     = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Hi — I\'m SafeDose AI. Ask me anything about medicines: uses, side effects, dosage, or interactions.' }
+    { role: 'bot', text: 'Hi — I\'m SafeDose AI. Ask me anything about medicines: uses, side effects, dosage, or safety.' }
   ]);
   const [input,   setInput]   = useState('');
   const [loading, setLoading] = useState(false);
