@@ -137,9 +137,9 @@ export default function ConsumerDashboard() {
 
       {/* Quick Links */}
       <div className={styles.quickLinks}>
-        <Link href="/interactions" className={styles.quickCard}>
-          <Activity size={20} />
-          <span>Drug Interactions</span>
+        <Link href="/voice" className={styles.quickCard}>
+          <Mic size={20} />
+          <span>Voice Check</span>
         </Link>
         <Link href="/pharmacies" className={styles.quickCard}>
           <ShieldCheck size={20} />
