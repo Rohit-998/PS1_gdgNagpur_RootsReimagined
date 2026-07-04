@@ -275,27 +275,15 @@ function ResultsPageContent() {
               )}
             </div>
 
-            {(medicineInfo.side_effects?.length > 0 || medicineInfo.drug_interactions?.length > 0) && (
+            {medicineInfo.side_effects?.length > 0 && (
               <div>
-                {medicineInfo.side_effects?.length > 0 && (
-                  <div style={{ marginBottom: '12px' }}>
-                    <p className={styles.drugInfoSectionTitle}><AlertCircle size={14} /> Warnings and Side Effects</p>
-                    <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 6px' }}>Common Side Effects:</p>
-                    <div className={styles.sideEffectList}>
-                      {medicineInfo.side_effects.map(effect => (
-                        <span key={effect} className={styles.sideEffectTag}>{effect}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {medicineInfo.drug_interactions?.length > 0 && (
-                  <div>
-                    <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 4px' }}>Interacts With:</p>
-                    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
-                      {medicineInfo.drug_interactions.join(', ')}
-                    </p>
-                  </div>
-                )}
+                <p className={styles.drugInfoSectionTitle}><AlertCircle size={14} /> Warnings and Side Effects</p>
+                <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 6px' }}>Common Side Effects:</p>
+                <div className={styles.sideEffectList}>
+                  {medicineInfo.side_effects.map(effect => (
+                    <span key={effect} className={styles.sideEffectTag}>{effect}</span>
+                  ))}
+                </div>
               </div>
             )}
           </div>

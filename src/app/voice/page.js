@@ -137,9 +137,9 @@ export default function VoicePage() {
           audio.play();
         }
       }
-    } catch {
-      console.error('Voice processing failed');
-      setStatus('verified');
+    } catch (err) {
+      console.error('Voice processing failed:', err);
+      setStatus('idle');
     }
   };
 
@@ -198,6 +198,7 @@ export default function VoicePage() {
           onClick={handleRecord}
           disabled={status === 'processing'}
           className={`${styles.recordBtn} ${isRecording ? styles.recordBtnActive : ''} ${status === 'processing' ? styles.recordBtnProcessing : ''}`}
+          aria-label={isRecording ? 'Stop recording' : 'Start recording'}
         >
           {status === 'processing' ? (
             <Loader2 size={36} className="animate-spin" />
