@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { QrCode, ArrowRight, ShieldCheck, GitMerge, ScanLine, Activity, Clock, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
-
+import VerificationWorkflow from '@/components/VerificationWorkflow';
 import VerificationIntelligence from '@/components/VerificationIntelligence';
 import styles from './page.module.css';
 
@@ -105,7 +105,12 @@ export default function Home() {
         </div>
       </section>
 
-
+      {/* ── How It Works ── */}
+      <section className={styles.workflowSection}>
+        <div className="container">
+          <VerificationWorkflow />
+        </div>
+      </section>
 
       {/* ── Feature Grid ── */}
       <section className={styles.featuresSection}>
