@@ -1,10 +1,12 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { QrCode, ArrowRight, ShieldCheck, GitMerge, ScanLine, Activity, Clock, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import VerificationWorkflow from '@/components/VerificationWorkflow';
 import VerificationIntelligence from '@/components/VerificationIntelligence';
+import ParticleGrid from '@/components/ParticleGrid';
 import styles from './page.module.css';
 
 // Feature cards for the six-layer verification system
@@ -54,36 +56,55 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className={styles.hero}>
+        <ParticleGrid />
         <div className={`container ${styles.heroInner}`}>
 
-          <motion.div
-            className={styles.heroText}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          >
+          <div className={styles.heroContent}>
+            <motion.div
+              className={styles.heroText}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            >
 
 
-            <h1 className={styles.heroTitle}>
-              VERIFY MEDICINE<br />
-              AUTHENTICITY <span style={{ fontWeight: 400, fontStyle: 'italic' }}>IN SECONDS</span>
-            </h1>
+              <h1 className={styles.heroTitle}>
+                VERIFY MEDICINE<br />
+                AUTHENTICITY <span style={{ fontWeight: 400, fontStyle: 'italic' }}>IN SECONDS</span>
+              </h1>
 
-            <p className={styles.heroSub}>
-              Multi-layer pharmaceutical verification using cryptographic signatures, supply chain validation, and counterfeit detection.
-            </p>
+              <p className={styles.heroSub}>
+                Multi-layer pharmaceutical verification using cryptographic signatures, supply chain validation, and counterfeit detection.
+              </p>
 
-            <div className={styles.heroCtas}>
-              <Link href="/scan" className={`${styles.ctaPrimary}`}>
-                <QrCode size={18} />
-                Start Verification
-              </Link>
-              <Link href="/demo" className={styles.ctaSecondary}>
-                View Demo
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </motion.div>
+              <div className={styles.heroCtas}>
+                <Link href="/scan" className={`${styles.ctaPrimary}`}>
+                  <QrCode size={18} />
+                  Start Verification
+                </Link>
+                <Link href="/demo" className={styles.ctaSecondary}>
+                  View Demo
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className={styles.heroImageWrap}
+              initial={{ opacity: 0, scale: 0.9, x: 40 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+            >
+              <Image
+                src="/hero-hand.png"
+                alt="Hand holding a medical test tube"
+                width={480}
+                height={580}
+                className={styles.heroImage}
+                priority
+              />
+            </motion.div>
+          </div>
 
           {/* Stats strip */}
           <motion.div

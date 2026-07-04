@@ -9,15 +9,26 @@
 
 /* ── Hero ── */
 .hero {
+  position: relative;
+  overflow: hidden;
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-subtle);
   padding: var(--sp-16) 0 var(--sp-12);
 }
 
 .heroInner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: var(--sp-12);
+}
+
+.heroContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-8);
 }
 
 .heroText {
@@ -25,6 +36,22 @@
   flex-direction: column;
   gap: var(--sp-5);
   max-width: 640px;
+  flex: 1;
+}
+
+.heroImageWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroImage {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
 }
 
 .heroBadge {
@@ -234,6 +261,9 @@
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
+  .heroImage {
+    max-width: 280px;
+  }
   .featureGrid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -246,6 +276,15 @@
   .statItem:nth-child(1),
   .statItem:nth-child(2) {
     border-bottom: 1px solid var(--border-subtle);
+  }
+}
+
+@media (max-width: 768px) {
+  .heroContent {
+    flex-direction: column;
+  }
+  .heroImageWrap {
+    display: none;
   }
 }
 
