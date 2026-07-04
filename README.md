@@ -1,5 +1,7 @@
 # SafeDose
 
+**Live Demo:** [https://ps-1-gdg-nagpur-roots-reimagined.vercel.app/](https://ps-1-gdg-nagpur-roots-reimagined.vercel.app/)
+
 SafeDose is a pharmaceutical verification platform designed to detect counterfeit medicines. It utilizes a 6-layer security engine, cryptographic hashing, and multilingual voice synthesis to authenticate medications via QR code scanning.
 
 ## Architecture & Verification Engine
