@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { buildAuthHeaders } from '@/lib/authHelpers';
 import SupplyChainTimeline from './SupplyChainTimeline';
+import CarrierInsights from './CarrierInsights';
 import styles from './SupplyChainTracker.module.css';
 
 const SupplyChainMap = dynamic(() => import('./SupplyChainMap'), { ssr: false });
@@ -252,169 +253,213 @@ export default function SupplyChainTracker() {
         ))}
       </div>
 
-      {/* Toolbar */}
-      <div className={styles.toolbar}>
-        <div style={{ position: 'relative', flex: 1, minWidth: 200 }}>
-          <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-          <input
-            className={styles.searchInput}
-            style={{ paddingLeft: 38 }}
-            placeholder="Search by medicine, batch ID, or destination..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-        </div>
-        <select className={styles.filterSelect} value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
-          <option value="all">All Status</option>
-          {Object.entries(STATUS_LABELS).map(([k, v]) => (
-            <option key={k} value={k}>{v}</option>
-          ))}
-        </select>
-        <button className={styles.createBtn} onClick={() => setShowCreateModal(true)}>
-          <Plus size={16} /> New Shipment
-        </button>
-      </div>
+      {/* Bento Container */}
+      <div className={styles.bentoContainer}>
+        {/* Left Column: Data & Actions */}
+        <div className={styles.bentoLeft}>
+          {/* Toolbar */}
+          <div className={styles.toolbar}>
+            <div style={{ position: 'relative', flex: 1, minWidth: 200 }}>
+              <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+              <input
+                className={styles.searchInput}
+                style={{ paddingLeft: 38 }}
+                placeholder="Search by medicine, batch ID, or destination..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+              />
+            </div>
+            <select className={styles.filterSelect} value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+              <option value="all">All Status</option>
+              {Object.entries(STATUS_LABELS).map(([k, v]) => (
+                <option key={k} value={k}>{v}</option>
+              ))}
+            </select>
+            <button className={styles.createBtn} onClick={() => setShowCreateModal(true)}>
+              <Plus size={16} /> New Shipment
+            </button>
+          </div>
 
-      {error && <p className={styles.errorText}>{error}</p>}
+          {error && <p className={styles.errorText}>{error}</p>}
 
-      {/* Empty State */}
-      {shipments.length === 0 && (
-        <div className={styles.emptyState}>
-          <Truck size={48} className={styles.emptyIcon} />
-          <p className={styles.emptyTitle}>No shipments yet</p>
-          <p className={styles.emptyDesc}>Create a new shipment to start tracking medicine batches through the supply chain.</p>
-          <button className={styles.seedBtn} onClick={handleSeedDemo}>
-            <Play size={16} /> Load Demo Data
-          </button>
-        </div>
-      )}
-
-      {/* Shipment List */}
-      {shipments.length > 0 && (
-        <div className={styles.shipmentList}>
-          {shipments.map(s => {
-            const progress = getProgress(s);
-            const isActive = selectedId === s._id;
-            return (
-              <div
-                key={s._id}
-                className={`${styles.shipmentCard} ${isActive ? styles.shipmentCardActive : ''}`}
-                onClick={() => handleSelect(s._id)}
-              >
-                <div className={styles.shipmentInfo}>
-                  <p className={styles.shipmentName}>{s.medicine_name}</p>
-                  <span className={styles.shipmentBatch}>{s.batch_id}</span>
-                </div>
-                <div className={styles.shipmentMeta}>
-                  <div className={styles.metaItem}>
-                    <span className={styles.metaValue}>{getCurrentLocation(s)}</span>
-                    <span className={styles.metaLabel}>Current</span>
-                  </div>
-                  <div className={styles.metaItem}>
-                    <span className={styles.metaValue}>{s.checkpoints?.length || 0}</span>
-                    <span className={styles.metaLabel}>Stops</span>
-                  </div>
-                </div>
-                <div className={styles.progressWrap}>
-                  <div className={styles.progressBar}>
-                    <div className={styles.progressFill} style={{ width: `${progress}%` }} />
-                  </div>
-                  <span className={styles.progressText}>{progress}%</span>
-                </div>
-                {isBehindSchedule(s) && (
-                  <span className={styles.behindChip}><AlertTriangle size={12} /> Behind</span>
-                )}
-                <span className={`${styles.badge} ${STATUS_BADGE_MAP[s.status] || styles.badgePreparing}`}>
-                  {STATUS_LABELS[s.status] || s.status}
-                </span>
-                <ChevronRight size={16} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Detail Panel */}
-      {selectedShipment && (
-        <div className={styles.detailPanel}>
-          <div className={styles.detailHeader}>
-            <h3 className={styles.detailTitle}>
-              <MapPin size={16} />
-              {selectedShipment.medicine_name} — {selectedShipment.batch_id}
-            </h3>
-            <div className={styles.detailActions} style={{ flexWrap: 'wrap' }}>
-              {selectedShipment.status !== 'delivered' && selectedShipment.status !== 'cancelled' && (
-                <>
-                  <input
-                    className={styles.advanceNote}
-                    placeholder="Optional note for this checkpoint…"
-                    value={advanceNote}
-                    onChange={e => setAdvanceNote(e.target.value)}
-                  />
-                  <button className={styles.advanceBtn} onClick={handleAdvance} disabled={advancing}>
-                    {advancing ? <Loader2 size={14} className="animate-spin" /> : <ChevronRight size={14} />}
-                    Advance to Next Checkpoint
-                  </button>
-                  <button className={styles.cancelBtn} onClick={handleCancel}>
-                    <XCircle size={14} /> Cancel
-                  </button>
-                </>
-              )}
-              <button className={styles.closeBtn} onClick={() => { setSelectedId(null); setSelectedShipment(null); }}>
-                <X size={16} />
+          {/* Empty State */}
+          {shipments.length === 0 && (
+            <div className={styles.emptyState}>
+              <Truck size={48} className={styles.emptyIcon} />
+              <p className={styles.emptyTitle}>No shipments yet</p>
+              <p className={styles.emptyDesc}>Create a new shipment to start tracking medicine batches through the supply chain.</p>
+              <button className={styles.seedBtn} onClick={handleSeedDemo}>
+                <Play size={16} /> Load Demo Data
               </button>
             </div>
-          </div>
+          )}
 
-          {/* Summary row */}
-          <div className={styles.detailSummary}>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>Status</span>
-              <span style={{ display: 'inline-flex', gap: 6, flexWrap: 'wrap' }}>
-                <span className={`${styles.badge} ${STATUS_BADGE_MAP[selectedShipment.status] || ''}`}>
-                  {STATUS_LABELS[selectedShipment.status] || selectedShipment.status}
-                </span>
-                {isBehindSchedule(selectedShipment) && (
-                  <span className={styles.behindChip}><AlertTriangle size={12} /> Behind Schedule</span>
-                )}
-              </span>
-            </div>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>Progress</span>
-              <span className={styles.summaryValue}>{getProgress(selectedShipment)}%</span>
-            </div>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>Current Location</span>
-              <span className={styles.summaryValue}>{getCurrentLocation(selectedShipment)}</span>
-            </div>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>Last Updated</span>
-              <span className={styles.summaryValue}>
-                {new Date(selectedShipment.updatedAt).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
-              </span>
-            </div>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>{selectedShipment.actual_delivery ? 'Delivered' : 'Est. Delivery'}</span>
-              <span className={styles.summaryValue}>
-                {selectedShipment.actual_delivery
-                  ? new Date(selectedShipment.actual_delivery).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
-                  : selectedShipment.estimated_delivery
-                    ? new Date(selectedShipment.estimated_delivery).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
-                    : '—'}
-              </span>
-            </div>
-          </div>
+          {/* Shipment Table */}
+          {shipments.length > 0 && (
+            <div className={styles.tableWrapper}>
+              <table className={styles.dataTable}>
+                <thead>
+                  <tr>
+                    <th>Freight Order</th>
+                    <th>Status</th>
+                    <th>Max Utilization</th>
+                    <th>Source Location</th>
+                    <th>Destination Location</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shipments.map(s => {
+                    const isActive = selectedId === s._id;
+                    const checkpoints = s.checkpoints || [];
+                    const source = checkpoints.length > 0 ? checkpoints[0] : null;
+                    const dest = checkpoints.length > 1 ? checkpoints[checkpoints.length - 1] : null;
+                    
+                    // Mock utilization percentage between 60-95% for UI
+                    const utilPct = Math.floor(Math.random() * 35) + 60; 
 
-          <div className={styles.detailBody}>
-            <div className={styles.detailMap}>
-              <SupplyChainMap checkpoints={selectedShipment.checkpoints || []} height={400} />
+                    return (
+                      <tr 
+                        key={s._id} 
+                        className={isActive ? styles.activeRow : ''}
+                        onClick={() => handleSelect(s._id)}
+                      >
+                        <td>
+                          <div className={styles.cellFreight}>
+                            <Truck size={14} className={styles.freightIcon} />
+                            {s.batch_id}
+                          </div>
+                        </td>
+                        <td>
+                          <div className={styles.cellStatus}>
+                            <span className={`${styles.statusSquare} ${STATUS_BADGE_MAP[s.status] || ''}`} />
+                          </div>
+                        </td>
+                        <td>
+                          <div className={styles.cellUtil}>
+                            <div className={styles.utilBarBg}>
+                              <div className={styles.utilBarFill} style={{ width: `${utilPct}%` }} />
+                            </div>
+                          </div>
+                        </td>
+                        <td className={styles.cellLocation}>{source ? source.name : '—'}</td>
+                        <td className={styles.cellLocation}>{dest ? dest.name : '—'}</td>
+                        <td className={styles.cellTime}>
+                          {source && source.actual_arrival ? new Date(source.actual_arrival).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}
+                        </td>
+                        <td className={styles.cellTime}>
+                          {dest && dest.expected_arrival ? new Date(dest.expected_arrival).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
-            <div className={styles.detailSidebar}>
-              <SupplyChainTimeline checkpoints={selectedShipment.checkpoints || []} />
+          )}
+
+          {/* Detail Panel */}
+          {selectedShipment && (
+            <div className={styles.detailPanel}>
+              <div className={styles.detailHeader}>
+                <h3 className={styles.detailTitle}>
+                  <MapPin size={16} />
+                  {selectedShipment.medicine_name} — {selectedShipment.batch_id}
+                </h3>
+                <div className={styles.detailActions} style={{ flexWrap: 'wrap' }}>
+                  {selectedShipment.status !== 'delivered' && selectedShipment.status !== 'cancelled' && (
+                    <>
+                      <input
+                        className={styles.advanceNote}
+                        placeholder="Optional note for this checkpoint…"
+                        value={advanceNote}
+                        onChange={e => setAdvanceNote(e.target.value)}
+                      />
+                      <button className={styles.advanceBtn} onClick={handleAdvance} disabled={advancing}>
+                        {advancing ? <Loader2 size={14} className="animate-spin" /> : <ChevronRight size={14} />}
+                        Advance to Next Checkpoint
+                      </button>
+                      <button className={styles.cancelBtn} onClick={handleCancel}>
+                        <XCircle size={14} /> Cancel
+                      </button>
+                    </>
+                  )}
+                  <button className={styles.closeBtn} onClick={() => { setSelectedId(null); setSelectedShipment(null); }}>
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Summary row */}
+              <div className={styles.detailSummary}>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryLabel}>Status</span>
+                  <span style={{ display: 'inline-flex', gap: 6, flexWrap: 'wrap' }}>
+                    <span className={`${styles.badge} ${STATUS_BADGE_MAP[selectedShipment.status] || ''}`}>
+                      {STATUS_LABELS[selectedShipment.status] || selectedShipment.status}
+                    </span>
+                    {isBehindSchedule(selectedShipment) && (
+                      <span className={styles.behindChip}><AlertTriangle size={12} /> Behind Schedule</span>
+                    )}
+                  </span>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryLabel}>Progress</span>
+                  <span className={styles.summaryValue}>{getProgress(selectedShipment)}%</span>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryLabel}>Current Location</span>
+                  <span className={styles.summaryValue}>{getCurrentLocation(selectedShipment)}</span>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryLabel}>Last Updated</span>
+                  <span className={styles.summaryValue}>
+                    {new Date(selectedShipment.updatedAt).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span className={styles.summaryLabel}>{selectedShipment.actual_delivery ? 'Delivered' : 'Est. Delivery'}</span>
+                  <span className={styles.summaryValue}>
+                    {selectedShipment.actual_delivery
+                      ? new Date(selectedShipment.actual_delivery).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+                      : selectedShipment.estimated_delivery
+                        ? new Date(selectedShipment.estimated_delivery).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                        : '—'}
+                  </span>
+                </div>
+              </div>
+
+              <div className={styles.detailBody}>
+                <div className={styles.detailSidebar} style={{ width: '100%', borderRight: 'none' }}>
+                  <SupplyChainTimeline checkpoints={selectedShipment.checkpoints || []} />
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
-      )}
+
+        {/* Right Column: Map & Insights */}
+        <div className={styles.bentoRight}>
+          <div className={styles.mapSection}>
+            <div className={styles.mapHeader}>
+              <MapPin size={16} />
+              <h3>Map Display {selectedShipment ? `- ${selectedShipment.batch_id}` : '(Global)'}</h3>
+            </div>
+            <div className={styles.prominentMap}>
+              {selectedShipment ? (
+                <SupplyChainMap checkpoints={selectedShipment.checkpoints || []} height={400} />
+              ) : shipments.length > 0 ? (
+                <SupplyChainMap checkpoints={shipments[0].checkpoints || []} height={400} />
+              ) : (
+                <SupplyChainMap checkpoints={[]} height={400} />
+              )}
+            </div>
+          </div>
+          
+          <CarrierInsights />
+        </div>
+      </div>
 
       {/* Create Modal */}
       {showCreateModal && (

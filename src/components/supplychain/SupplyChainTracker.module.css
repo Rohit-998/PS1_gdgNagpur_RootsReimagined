@@ -102,95 +102,118 @@
   background: #142F4A;
 }
 
-/* ── Shipment List ── */
-.shipmentList {
+/* ── Bento Box Layout ── */
+.bentoContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-8);
+  align-items: start;
+  margin-top: var(--sp-4);
+}
+
+@media (min-width: 1024px) {
+  .bentoContainer {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+.bentoLeft {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
-}
-
-.shipmentCard {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: var(--sp-5);
-  display: flex;
-  align-items: center;
-  gap: var(--sp-5);
-  cursor: pointer;
-  transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
-  box-shadow: var(--shadow-xs);
-}
-
-.shipmentCard:hover {
-  border-color: var(--border-default);
-  box-shadow: var(--shadow-sm);
-}
-
-.shipmentCardActive {
-  border-color: var(--color-brand-primary);
-  box-shadow: 0 0 0 2px var(--color-brand-primary-tint);
-}
-
-.shipmentInfo {
-  flex: 1;
+  gap: var(--sp-6);
   min-width: 0;
 }
 
-.shipmentName {
-  font-size: var(--text-base);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 2px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.shipmentBatch {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-}
-
-.shipmentMeta {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-6);
-  flex-shrink: 0;
-}
-
-.metaItem {
+.bentoRight {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  align-items: center;
+  gap: var(--sp-6);
+  position: sticky;
+  top: var(--sp-6);
+  min-width: 0;
 }
 
-.metaValue {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text-primary);
+/* ── Shipment Data Table ── */
+.tableWrapper {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+  overflow-x: auto;
 }
 
-.metaLabel {
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--font-sans);
+}
+
+.dataTable th {
+  padding: var(--sp-3) var(--sp-4);
   font-size: 10px;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  background: var(--bg-inset);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
 }
 
-/* ── Progress Bar ── */
-.progressWrap {
-  width: 120px;
-  flex-shrink: 0;
+.dataTable td {
+  padding: var(--sp-4);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+  transition: background var(--ease-fast);
+}
+
+.dataTable tr:last-child td {
+  border-bottom: none;
+}
+
+.dataTable tbody tr {
+  cursor: pointer;
+}
+
+.dataTable tbody tr:hover td {
+  background: var(--bg-inset);
+}
+
+.activeRow td {
+  background: var(--color-brand-primary-tint) !important;
+}
+
+.cellFreight {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.freightIcon {
+  color: var(--color-brand-primary);
+}
+
+.cellStatus {
+  display: flex;
   align-items: center;
 }
 
-.progressBar {
+.statusSquare {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.cellUtil {
+  width: 80px;
+}
+
+.utilBarBg {
   width: 100%;
   height: 6px;
   background: var(--bg-inset);
@@ -198,17 +221,23 @@
   overflow: hidden;
 }
 
-.progressFill {
+.utilBarFill {
   height: 100%;
-  background: var(--color-brand-secondary);
+  background: #3D7A2E;
   border-radius: var(--radius-full);
-  transition: width 0.4s ease;
 }
 
-.progressText {
-  font-size: 10px;
-  font-weight: 600;
+.cellLocation {
+  font-size: var(--text-sm);
+  color: var(--color-brand-primary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cellTime {
+  font-size: var(--text-sm);
   color: var(--text-secondary);
+  white-space: nowrap;
 }
 
 /* ── Status Badge ── */
@@ -801,6 +830,38 @@
 }
 
 .advanceNote:focus { border-color: var(--border-focus); }
+
+/* ── Map Display ── */
+.mapSection {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mapHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-inset);
+}
+
+.mapHeader h3 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.prominentMap {
+  width: 100%;
+  height: 400px;
+}
 
 /* ── Responsive ── */
 @media (max-width: 1100px) {
